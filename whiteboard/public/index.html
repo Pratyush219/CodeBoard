@@ -19,13 +19,14 @@
             <button id="draw" class="tool">Draw</button>
             <button id="erase" class="tool">Erase</button>
             Color :&nbsp;
-            <input type="color" id="brush-color" class="tool">
+            <input type="color" id="line-color" class="tool">
             Brush Size:&nbsp;
             <input type="range" min="1" max="20" value="2" id="brush-size" class="tool">
             <button id="clear" class="tool">Clear</button>
         </div>
         <canvas id="canvas"></canvas>
     </div>
+    <div id="ide-container"></div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./script.js"></script>
 </body>

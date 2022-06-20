@@ -16,6 +16,7 @@
     "ezcompilex": "^0.7.4",
     "http": "^0.0.1-security",
     "nodemon": "^2.0.16",
+    "path": "^0.12.7",
     "socket.io": "^4.5.1"
   }
 }

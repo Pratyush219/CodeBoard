@@ -1,10 +1,23 @@
-const server = require("./server").server;
-// console.log(server);
+const express = require("express");
+const http = require("http");
+const app = express();
+const server = http.createServer(app);
 const socketIO = require("socket.io");
-
-let io = socketIO(server);
-let connectionsBoard = [];
+const io = socketIO(server);
+const path = require('path');
+let publiPath = path.join(__dirname, 'public');
+app.use(express.static(publiPath))
+let connections = new Set();
 let imageData;
+let port = process.env.PORT || 9999;
+server.listen(port, (error) => {
+    if(error) {
+        console.error(error);
+    } 
+    else {
+        console.log(`Server listening at port ${port}`);
+    }
+}) 
 io.on("connection", (socket) => {
     console.log(`${socket.id} has connnected`);
     console.log(connections.size);
@@ -17,7 +30,6 @@ io.on("connection", (socket) => {
             let src = it.next();
             console.log(src.value);
             io.to(src.value).emit("get-data", socket.id);
-            io.to(src.value).emit("get-code", socket.id);
         }
         connections.add(socket.id);
         console.log("After:", connections.size);
@@ -50,16 +62,13 @@ io.on("connection", (socket) => {
         io.emit("onEraseMode");
     });
     socket.on("clearScreen", () => {
-        socket.broadcast.emit("onClearScreen");
+        io.emit("onClearScreen");
     });
     socket.on("down", (data) => {
-        socket.broadcast.emit("onDown", data.X, data.Y);
+        io.emit("onDown", data.X, data.Y);
     });
-    socket.on("lineEnd", () => {
-        io.emit("onLineEnd");
-    });
-    socket.on("propertyChange", () => {
-        io.emit("onPropertyChange");
+    socket.on("up", () => {
+        io.emit("onUp");
     });
     socket.on("linecolorchange", (data) => {
         socket.broadcast.emit("onlinecolorchange", data);
