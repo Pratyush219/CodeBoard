@@ -4,20 +4,19 @@ const app = express();
 const server = http.createServer(app);
 const socketIO = require("socket.io");
 const io = socketIO(server);
-const path = require('path');
-let publiPath = path.join(__dirname, 'public');
-app.use(express.static(publiPath))
+const path = require("path");
+let publiPath = path.join(__dirname, "public");
+app.use(express.static(publiPath));
 let connections = new Set();
 let imageData;
 let port = process.env.PORT || 9999;
-server.listen(port, (error) => {
-    if(error) {
+server.listen(port, "0.0.0.0", (error) => {
+    if (error) {
         console.error(error);
-    } 
-    else {
+    } else {
         console.log(`Server listening at port ${port}`);
     }
-}) 
+});
 io.on("connection", (socket) => {
     console.log(`${socket.id} has connnected`);
     console.log(connections.size);

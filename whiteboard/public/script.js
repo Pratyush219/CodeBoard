@@ -1,4 +1,5 @@
-const client = io.connect("http://localhost:9999");
+const ip = "10.0.5.53";
+const client = io.connect(`http://${ip}:9999`);
 const canvasContainer = document.getElementById("canvas-container");
 const tools = document.getElementById("tools-section");
 const canvas = document.getElementById("canvas");
@@ -70,7 +71,7 @@ brushSizePicker.onchange = function (event) {
     client.emit("brushSizechange", brushSize);
 };
 client.on("onUp", () => {
-    // ctx.closePath();
+    ctx.beginPath();
     mouseDown = false;
 });
 client.on("onDown", (x, y) => {
