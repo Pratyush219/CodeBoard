@@ -158,6 +158,10 @@ client.on("onlinecolorchange", (data) => {
     client.emit("drawMode");
     colorPicker.value = data;
     lineColor = data;
+    drawBtn.style.border = "medium solid black";
+    eraseBtn.style.border = "thin solid black";
+    erasing = false;
+    ctx.globalCompositeOperation = "source-over";
 });
 client.on("onbrushsizechange", (data) => {
     brushSizeOptionMenu.value = data;
